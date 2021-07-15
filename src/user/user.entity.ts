@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany } from 
 import { IsEmail } from 'class-validator';
 import * as argon2 from 'argon2';
 import { SliderEntity } from 'src/sliders/slider.entity';
+import { UserType } from './userEnums';
 
 @Entity('user')
 export class UserEntity {
@@ -18,19 +19,13 @@ export class UserEntity {
     @Column()
     password: string;
 
-    @Column({ default: 'staf' })
-    role: 'admin' | 'staf';
+    @Column({ default: UserType.staf })
+    role: UserType;
 
     @BeforeInsert()
     async hashPassword() {
         this.password = await argon2.hash(this.password)
     }
-
-    // @OneToMany(type => SliderEntity, slider => slider.createdBy)
-    // createdSliders: SliderEntity[];
-
-    // @OneToMany(type => SliderEntity, slider => slider.updatedBy)
-    // updatedSliders: SliderEntity[];
 
     @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
     created: Date;

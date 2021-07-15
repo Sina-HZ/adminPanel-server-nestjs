@@ -1,1 +1,0 @@
-export const SECRET = 'NazaninaMabenazeToJavaniDadeim274018921444864726ScarletNematiFromTehran';

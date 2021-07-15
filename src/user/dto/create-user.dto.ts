@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsOptional } from "class-validator";
+import { UserType } from "../userEnums";
 
 export class CreateUserDto {
 
@@ -12,5 +13,5 @@ export class CreateUserDto {
     readonly password: string;
 
     @IsOptional()
-    readonly role: 'admin' | 'staf'
+    readonly role: UserType
 }

@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsOptional } from "class-validator";
 import { FileEntity } from "src/file/file.entity";
+import { SliderStatus } from "../sliderEnum";
 
 export class CreateSliderDto {
 
@@ -10,7 +11,7 @@ export class CreateSliderDto {
     readonly image: FileEntity;
 
     @IsOptional()
-    readonly status: 'deactive' | 'active';
+    readonly status: SliderStatus;
 
     @IsNotEmpty()
     readonly token: string

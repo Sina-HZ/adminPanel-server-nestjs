@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToOne, ManyToO
 import { IsEmail } from 'class-validator';
 import { UserEntity } from 'src/user/user.entity';
 import { FileEntity } from 'src/file/file.entity';
+import { SliderStatus } from './sliderEnum';
 
 @Entity('slider')
 export class SliderEntity {
@@ -15,8 +16,8 @@ export class SliderEntity {
     @JoinColumn()
     image: FileEntity;
 
-    @Column({default: 'deactive'})
-    status: 'deactive' | 'active';
+    @Column({default: SliderStatus.deactive})
+    status: SliderStatus;
 
     @ManyToOne(type => UserEntity)
     @JoinColumn()

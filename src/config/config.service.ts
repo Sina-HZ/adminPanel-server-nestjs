@@ -3,19 +3,11 @@ import { FileEntity } from 'src/file/file.entity';
 import { ResellerEntity } from 'src/reseller/reseller.entity';
 import { SliderEntity } from 'src/sliders/slider.entity';
 import { UserEntity } from 'src/user/user.entity';
-import * as dotenv from 'dotenv';
-import * as fs from 'fs';
-
-require('dotenv').config();
-
-const nodeEnv = process.env.NODE_ENV || 'development';
-console.log('nodeEnv: ',nodeEnv)
-const envFile = nodeEnv === 'production' ? '.env' : '.env.development';
-const envConfig = dotenv.parse(fs.readFileSync(envFile));
+import EnvFile from './env.service';
 
 class ConfigService {
-    constructor(private env: { [k: string]: string | undefined }) { 
-        this.env = envConfig
+    constructor(private env: { [k: string]: string | undefined }) {         
+        this.env = env
     }
 
     private getValue(key: string, throwOnMissing = true): string {
@@ -64,7 +56,7 @@ class ConfigService {
     }
 }
 
-const configService = new ConfigService(process.env)
+const configService = new ConfigService(EnvFile)
     .ensureValues([
         'POSTGRES_HOST',
         'POSTGRES_PORT',

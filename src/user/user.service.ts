@@ -6,9 +6,10 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UserEntity } from "./user.entity";
 import { UserRO } from "./user.interface";
 import * as jwt from 'jsonwebtoken';
-import { SECRET } from "src/config";
 import * as argon2 from 'argon2';
 import { LoginUserDto } from "./dto/login-user.dto";
+import EnvFile from "src/config/env.service";
+import { UserType } from "./userEnums";
 
 
 @Injectable()
@@ -58,7 +59,7 @@ export class UserService {
             throw new HttpException({ message: 'Input data validation failed', errors }, HttpStatus.BAD_REQUEST)
         }
 
-        if (!['staf', 'admin'].includes(role)) {
+        if (!Object.values(UserType).includes(role)) {
             const errors = { role: 'must be on of "staf" or "admin".' };
             throw new HttpException({ message: 'Input data validation failed', errors }, HttpStatus.BAD_REQUEST)
         }
@@ -81,6 +82,8 @@ export class UserService {
     }
 
     public generatJWT(user: UserEntity) {
+        const SECRET = EnvFile.SECRET;
+
         let today = new Date();
         let exp = new Date(today);
         exp.setDate(today.getDate() + 60);

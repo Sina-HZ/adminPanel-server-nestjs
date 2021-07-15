@@ -63,7 +63,6 @@ export class SliderService {
         newSlider.createdBy = user;
 
         const errors = await validate(newSlider);
-        console.log('errors: ',errors)
 
         if (errors.length > 0) {
             const _errors = { slider: 'Userinput is not valid' };

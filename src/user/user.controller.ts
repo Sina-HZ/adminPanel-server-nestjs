@@ -1,9 +1,8 @@
-import { Body, Controller, Get, Headers, HttpException, Param, Post, Query, Req } from "@nestjs/common";
+import { Body, Controller, Get, Headers, HttpException, Post } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { JwtDecode, UserRO } from "./user.interface";
 import { UserService } from "./user.service";
-import { Request } from 'express';
 import * as jwt from 'jsonwebtoken';
 
 @Controller('users')
