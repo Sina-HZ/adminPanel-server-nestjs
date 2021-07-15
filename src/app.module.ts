@@ -10,6 +10,7 @@ import { UserEntity } from './user/user.entity';
 import { UserModule } from './user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ResellerModule } from './reseller/reseller.module';
 
 
 @Module({
@@ -20,9 +21,9 @@ import { join } from 'path';
     //   exclude: ['/api*'],
     // }),
     UserModule,
-
+    ResellerModule,
     SliderModule,
-    FileModule
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -38,7 +38,7 @@ export class SliderService {
                 'user.id',
                 'user.username',
                 'user.email'])
-            .where('slider.status = :status', { status: 'active' })
+            // .where('slider.status = :status', { status: 'active' })
 
         const slidersList = await sliders.getMany()
         return slidersList
@@ -47,8 +47,7 @@ export class SliderService {
     async create(dto: CreateSliderDto) {
         const { name, image, status, token } = dto;
 
-        const qb = await this.fileRepsitory.findOne({ where: { filename: image } });
-
+        const qb = await this.fileRepsitory.findOne({ where: { id: image } });
         if (!qb) {
             const _errors = { slider: 'imageId is not valid' };
             throw new HttpException({ message: 'Input data validation failed', _errors }, HttpStatus.BAD_REQUEST)
@@ -64,6 +63,8 @@ export class SliderService {
         newSlider.createdBy = user;
 
         const errors = await validate(newSlider);
+        console.log('errors: ',errors)
+
         if (errors.length > 0) {
             const _errors = { slider: 'Userinput is not valid' };
             throw new HttpException({ message: 'Input data validation failed', _errors }, HttpStatus.BAD_REQUEST)

@@ -26,11 +26,11 @@ export class UserEntity {
         this.password = await argon2.hash(this.password)
     }
 
-    @OneToMany(type => SliderEntity, slider => slider.createdBy)
-    createdSliders: SliderEntity[];
+    // @OneToMany(type => SliderEntity, slider => slider.createdBy)
+    // createdSliders: SliderEntity[];
 
-    @OneToMany(type => SliderEntity, slider => slider.updatedBy)
-    updatedSliders: SliderEntity[];
+    // @OneToMany(type => SliderEntity, slider => slider.updatedBy)
+    // updatedSliders: SliderEntity[];
 
     @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
     created: Date;

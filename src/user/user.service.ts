@@ -33,6 +33,17 @@ export class UserService {
         return null;
     }
 
+    async getUser(email: string) {
+
+        const user = await this.userRepository.findOne({ where: { email }, select: ['email', 'id', 'role', 'username'] });
+        
+        if (!user) {
+            return null;
+        }
+
+        return user
+    }
+
     async create(dto: CreateUserDto): Promise<UserRO> {
         const { username, email, password, role } = dto;
         const qb = await getRepository(UserEntity)

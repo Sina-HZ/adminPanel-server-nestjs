@@ -18,11 +18,11 @@ export class SliderEntity {
     @Column({default: 'deactive'})
     status: 'deactive' | 'active';
 
-    @ManyToOne(type => UserEntity, user => user.createdSliders)
+    @ManyToOne(type => UserEntity)
     @JoinColumn()
     createdBy: UserEntity;
 
-    @ManyToOne(type => UserEntity, user => user.updatedSliders)
+    @ManyToOne(type => UserEntity)
     updatedBy: UserEntity;
 
     @Column({ type: "timestamp", nullable: true })

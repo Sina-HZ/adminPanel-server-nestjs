@@ -1,14 +1,16 @@
-import { Body, Controller, Get, HttpException, Post, Req } from "@nestjs/common";
+import { Body, Controller, Get, Headers, HttpException, Param, Post, Query, Req } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
-import { UserRO } from "./user.interface";
+import { JwtDecode, UserRO } from "./user.interface";
 import { UserService } from "./user.service";
+import { Request } from 'express';
+import * as jwt from 'jsonwebtoken';
 
-@Controller()
+@Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
-    @Post('users/login')
+    @Post('/login')
     async login(@Body() userData: LoginUserDto): Promise<UserRO> {
         const _user = await this.userService.findOne(userData)
 
@@ -21,8 +23,14 @@ export class UserController {
         return { user }
     }
 
-    @Post('users')
+    @Post('/')
     async create(@Body('user') userData: CreateUserDto) {
         return this.userService.create(userData);
+    }
+
+    @Get('/')
+    async getUser(@Headers('Authorization') Authorization: string) {
+        const decode = jwt.decode(Authorization.split(' ')?.[1]) as JwtDecode;
+        return await this.userService.getUser(decode.email);
     }
 }
