@@ -13,9 +13,16 @@ export class SliderController {
     }
 
     @Post()
-    async addSlider(@Body() body ,@Headers('Authorization') token) {
-        const rawToken = token.split(' ')[1]
-        const slider = await this.sliderService.create({...body,token: rawToken});
+    async addSlider(@Body() body, @Headers('Authorization') token) {
+
+        const slider = await this.sliderService.create({ ...body, token: token });
+        return slider;
+    }
+
+    @Post('remove')
+    async removeSlider(@Body() body, @Headers('Authorization') token) {
+
+        const slider = await this.sliderService.remove({ ...body, token: token });
         return slider;
     }
 }

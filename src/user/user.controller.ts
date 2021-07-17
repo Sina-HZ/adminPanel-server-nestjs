@@ -5,7 +5,7 @@ import { JwtDecode, UserRO } from "./user.interface";
 import { UserService } from "./user.service";
 import * as jwt from 'jsonwebtoken';
 
-@Controller('users')
+@Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
@@ -29,7 +29,7 @@ export class UserController {
 
     @Get('/')
     async getUser(@Headers('Authorization') Authorization: string) {
-        const decode = jwt.decode(Authorization.split(' ')?.[1]) as JwtDecode;
+        const decode = jwt.decode(Authorization) as JwtDecode;
         return await this.userService.getUser(decode.email);
     }
 }

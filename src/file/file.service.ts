@@ -28,11 +28,6 @@ export class FileService {
     async saveFile(dto: CreateFileDto): Promise<FileEntity> {
         const {filename, originalname, mimetype, destination, path, size} = dto;
 
-        // const qb = await getRepository(FileEntity)
-        //     .createQueryBuilder('file')
-        //     .where('file.filename = :filename', { filename })
-
-        // const file = await qb.getOne();
 
         let newFile = new FileEntity();
         newFile.originalname = originalname;
@@ -44,7 +39,6 @@ export class FileService {
 
         const errors = await validate(newFile);
         if (errors.length > 0) {
-            console.log('fileError: ',errors);
             const _errors = { file: 'Userinput is not valid' };
             throw new HttpException({ message: 'Input data validation failed', _errors }, HttpStatus.BAD_REQUEST)
         } else {
